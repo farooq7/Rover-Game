@@ -1,0 +1,60 @@
+#ifndef _RGB_SENSOR_H
+#define _RGB_SENSOR_H
+
+#include "common.h"
+#include <timers.h>
+
+// Information specific to the TCS34725 RGB Color Sensor
+// I2C address
+#define TCS_I2C_ADDRESS 0x29
+// Register locations
+#define TCS_ENABLE_REGISTER 0x00
+#define TCS_RGBC_TIMING_REGISTER 0x01
+#define TCS_WAIT_TIMING_REGISTER 0x03
+#define TCS_LOW_THRESHOLD_LOW_REGISTER 0x04
+#define TCS_LOW_THRESHOLD_HIGH_REGISTER 0x05
+#define TCS_HIGH_THRESHOLD_LOW_REGISTER 0x06
+#define TCS_HIGH_THRESHOLD_HIGH_REGISTER 0x07
+#define TCS_PERSISTENCE_REGISTER 0x0c
+#define TCS_CONFIG_REGISTER 0x0d
+#define TCS_CONTROL_REGISTER 0x0f
+#define TCS_ID_REGISTER 0x12
+#define TCS_STATUS_REGISTER 0x13
+#define TCS_RGBC_CLEAR_LOW_REGISTER 0x14
+#define TCS_RGBC_CLEAR_HIGH_REGISTER 0x15
+#define TCS_RGBC_RED_LOW_REGISTER 0x16
+#define TCS_RGBC_RED_HIGH_REGISTER 0x17
+#define TCS_RGBC_GREEN_LOW_REGISTER 0x18
+#define TCS_RGBC_GREEN_HIGH_REGISTER 0x19
+#define TCS_RGBC_BLUE_LOW_REGISTER 0x1a
+#define TCS_RGBC_BLUE_HIGH_REGISTER 0x1b
+// Bit masks for registers
+#define TCS_COMMAND_SELECT_MASK 0x80
+#define TCS_ENABLE_AIEN_MASK 0x10
+#define TCS_ENABLE_WEN_MASK 0x08
+#define TCS_ENABLE_AEN_MASK 0x02
+#define TCS_ENABLE_PON_MASK 0x01
+#define TCS_PERSISTENCE_APERS_MASK 0x0f
+#define TCS_CONFIG_WLONG_MASK 0x02
+#define TCS_CONTROL_AGAIN_MASK 0x03
+#define TCS_STATUS_AINT_MASK 0x10
+#define TCS_STATUS_AVALID_MASK 0x01
+#define TCS_REGISTER_ADDRESS_MASK 0x1f
+// Values for the registers
+#define TCS_COMMAND_AUTO_INCREMENT 0x20
+#define TCS_AGAIN_1X 0x00
+#define TCS_AGAIN_4X 0x01
+#define TCS_AGAIN_16X 0x02
+#define TCS_AGAIN_60X 0x03
+
+// Handle color sensor globals
+unsigned char ColorData[8];
+DRV_I2C_BUFFER_HANDLE BufferHandle;
+
+RGB_MESSAGE DRV_TCS_GetData();
+void DRV_TCS_Init();
+
+void initializeSensorTimer();
+void callbackSensorTimer(TimerHandle_t timer);
+
+#endif /* _RGB_SENSOR_H */
